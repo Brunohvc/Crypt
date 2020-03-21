@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace Crypt
 {
@@ -107,6 +108,72 @@ namespace Crypt
             catch (Exception ex)
             {
                 MessageBox.Show("Um erro ocorreu ao tentar descriptografar");
+            }
+        }
+
+        private void savePublicKey_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(publicXml))
+            {
+                string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                filePath = filePath + @"\PublicKey.xml";
+                TextWriter sw = new StreamWriter(filePath);
+
+                sw.Write(publicXml);
+                sw.Close();
+
+                MessageBox.Show("Chave pública salva!");
+            }
+            else
+            {
+                MessageBox.Show("É necessário gerar uma chave para salva-la!");
+            }
+        }
+
+        private void importPublicKey_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    var xmlReader = new XmlTextReader(openFileDialog.FileName);
+
+                    string txtDados = "";
+
+                    while (xmlReader.Read())
+                    {
+                        switch (xmlReader.NodeType)
+                        {
+                            case XmlNodeType.Element:
+                                txtDados += "<" + xmlReader.Name + ">";
+                                break;
+                            case XmlNodeType.Text:
+                                txtDados += xmlReader.Value;
+                                break;
+                            case XmlNodeType.EndElement:
+                                txtDados += "</" + xmlReader.Name + ">";
+                                break;
+                        }
+                    }
+
+                    var rsa = new RSACryptoServiceProvider();
+                    rsa.FromXmlString(txtDados);
+
+                    if (!txtDados.Contains("<RSAKeyValue>") || !txtDados.Contains("<Modulus>") || !txtDados.Contains("<Exponent>") || txtDados.Contains("<P>") ||
+                        txtDados.Contains("<Q>") || txtDados.Contains("<DP>") || txtDados.Contains("<DQ>") || txtDados.Contains("<InverseQ>") ||
+                        txtDados.Contains("<D>"))
+                    {
+                        throw new System.ArgumentException("Erro ao importar chave");
+                    }
+
+                    publicXml = txtDados;
+                    MessageBox.Show($"Chave pública Importada");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ocorreu um erro ao importar a chave pública");
+                }
             }
         }
     }

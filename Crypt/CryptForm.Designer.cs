@@ -32,6 +32,8 @@
             this.generateKeysButton = new System.Windows.Forms.Button();
             this.EncryptButton = new System.Windows.Forms.Button();
             this.DecryptButton = new System.Windows.Forms.Button();
+            this.savePublicKey = new System.Windows.Forms.Button();
+            this.importPublicKey = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // selectArchiveButton
@@ -74,11 +76,33 @@
             this.DecryptButton.UseVisualStyleBackColor = true;
             this.DecryptButton.Click += new System.EventHandler(this.DecryptButton_Click);
             // 
+            // savePublicKey
+            // 
+            this.savePublicKey.Location = new System.Drawing.Point(12, 128);
+            this.savePublicKey.Name = "savePublicKey";
+            this.savePublicKey.Size = new System.Drawing.Size(165, 23);
+            this.savePublicKey.TabIndex = 4;
+            this.savePublicKey.Text = "Salvar chave pública";
+            this.savePublicKey.UseVisualStyleBackColor = true;
+            this.savePublicKey.Click += new System.EventHandler(this.savePublicKey_Click);
+            // 
+            // importPublicKey
+            // 
+            this.importPublicKey.Location = new System.Drawing.Point(12, 157);
+            this.importPublicKey.Name = "importPublicKey";
+            this.importPublicKey.Size = new System.Drawing.Size(165, 23);
+            this.importPublicKey.TabIndex = 5;
+            this.importPublicKey.Text = "Importar chave Pública";
+            this.importPublicKey.UseVisualStyleBackColor = true;
+            this.importPublicKey.Click += new System.EventHandler(this.importPublicKey_Click);
+            // 
             // CryptForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.importPublicKey);
+            this.Controls.Add(this.savePublicKey);
             this.Controls.Add(this.DecryptButton);
             this.Controls.Add(this.EncryptButton);
             this.Controls.Add(this.generateKeysButton);
@@ -95,6 +119,8 @@
         private System.Windows.Forms.Button generateKeysButton;
         private System.Windows.Forms.Button EncryptButton;
         private System.Windows.Forms.Button DecryptButton;
+        private System.Windows.Forms.Button savePublicKey;
+        private System.Windows.Forms.Button importPublicKey;
     }
 }
 
