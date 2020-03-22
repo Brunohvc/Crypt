@@ -1,2 +1,3 @@
 # Crypt
-Trabalho de Criptografia, Equipe: Bruno, Augusto e Felipe P.
+Alunos: Bruno H, Felipe P. e Augusto W.
+<p>O projeto consiste em criar um sistema de criptografia com RSA</p>
