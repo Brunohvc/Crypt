@@ -34,6 +34,8 @@
             this.DecryptButton = new System.Windows.Forms.Button();
             this.savePublicKey = new System.Windows.Forms.Button();
             this.importPublicKey = new System.Windows.Forms.Button();
+            this.importPrivateKey = new System.Windows.Forms.Button();
+            this.savePrivateKey = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // selectArchiveButton
@@ -96,11 +98,33 @@
             this.importPublicKey.UseVisualStyleBackColor = true;
             this.importPublicKey.Click += new System.EventHandler(this.importPublicKey_Click);
             // 
+            // importPrivateKey
+            // 
+            this.importPrivateKey.Location = new System.Drawing.Point(12, 215);
+            this.importPrivateKey.Name = "importPrivateKey";
+            this.importPrivateKey.Size = new System.Drawing.Size(165, 23);
+            this.importPrivateKey.TabIndex = 7;
+            this.importPrivateKey.Text = "Importar chave Privada";
+            this.importPrivateKey.UseVisualStyleBackColor = true;
+            this.importPrivateKey.Click += new System.EventHandler(this.importPrivateKey_Click);
+            // 
+            // savePrivateKey
+            // 
+            this.savePrivateKey.Location = new System.Drawing.Point(12, 186);
+            this.savePrivateKey.Name = "savePrivateKey";
+            this.savePrivateKey.Size = new System.Drawing.Size(165, 23);
+            this.savePrivateKey.TabIndex = 6;
+            this.savePrivateKey.Text = "Salvar chave Privada";
+            this.savePrivateKey.UseVisualStyleBackColor = true;
+            this.savePrivateKey.Click += new System.EventHandler(this.savePrivateKey_Click);
+            // 
             // CryptForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(190, 253);
+            this.Controls.Add(this.importPrivateKey);
+            this.Controls.Add(this.savePrivateKey);
             this.Controls.Add(this.importPublicKey);
             this.Controls.Add(this.savePublicKey);
             this.Controls.Add(this.DecryptButton);
@@ -121,6 +145,8 @@
         private System.Windows.Forms.Button DecryptButton;
         private System.Windows.Forms.Button savePublicKey;
         private System.Windows.Forms.Button importPublicKey;
+        private System.Windows.Forms.Button importPrivateKey;
+        private System.Windows.Forms.Button savePrivateKey;
     }
 }
 

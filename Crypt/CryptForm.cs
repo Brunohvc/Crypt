@@ -176,5 +176,71 @@ namespace Crypt
                 }
             }
         }
+
+        private void savePrivateKey_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(publicPrivateXml))
+            {
+                string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                filePath = filePath + @"\PrivateKey.xml";
+                TextWriter sw = new StreamWriter(filePath);
+
+                sw.Write(publicPrivateXml);
+                sw.Close();
+
+                MessageBox.Show("Chave privada salva!");
+            }
+            else
+            {
+                MessageBox.Show("É necessário gerar uma chave para salva-la!");
+            }
+        }
+
+        private void importPrivateKey_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    var xmlReader = new XmlTextReader(openFileDialog.FileName);
+
+                    string txtDados = "";
+
+                    while (xmlReader.Read())
+                    {
+                        switch (xmlReader.NodeType)
+                        {
+                            case XmlNodeType.Element:
+                                txtDados += "<" + xmlReader.Name + ">";
+                                break;
+                            case XmlNodeType.Text:
+                                txtDados += xmlReader.Value;
+                                break;
+                            case XmlNodeType.EndElement:
+                                txtDados += "</" + xmlReader.Name + ">";
+                                break;
+                        }
+                    }
+
+                    var rsa = new RSACryptoServiceProvider();
+                    rsa.FromXmlString(txtDados);
+
+                    if (!txtDados.Contains("<RSAKeyValue>") || !txtDados.Contains("<Modulus>") || !txtDados.Contains("<Exponent>") || !txtDados.Contains("<P>") ||
+                        !txtDados.Contains("<Q>") || !txtDados.Contains("<DP>") || !txtDados.Contains("<DQ>") || !txtDados.Contains("<InverseQ>") ||
+                        !txtDados.Contains("<D>"))
+                    {
+                        throw new System.ArgumentException("Erro ao importar chave");
+                    }
+
+                    publicPrivateXml = txtDados;
+                    MessageBox.Show($"Chave privada Importada");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ocorreu um erro ao importar a chave privada");
+                }
+            }
+        }
     }
 }
